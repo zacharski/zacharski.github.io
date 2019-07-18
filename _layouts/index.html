@@ -1,0 +1,27 @@
+---
+layout: base
+---
+
+<!-- Banner -->
+<div class="jumbotron">
+	<div class="container text-center">
+    <span class="jumbo-text">
+		{% if site.jumbotron_image %}
+			<img src="{{ site.baseurl }}/img/{{ site.jumbotron_image }}"
+			     alt="{{ site.title }} Icon" />
+		{% endif %}
+		<header>
+			<h1 id="jumbo-header"><strong>{{ site.data.course.description }}</strong></h1>
+		</header>
+    <!-- <h3><span id="jumbo-subheader">Learning Backend Development <a href="http://makingandlearning.org" target="_blank">Making and Learning</a></span></h3> -->
+    </span>
+	</div>
+
+</div>
+<div class="container">
+	<div class="clearfix">
+		<section id="homepage-text">
+			{{ content }}
+		</section>
+	</div>
+</div>
