@@ -2,9 +2,16 @@
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ubL_WBjatLk" frameborder="0" allowfullscreen></iframe>
 
+### In this video
+
+* Installing Postgres
+* Creating databases and basic database commands
+* Creating tables and how to show the structure of tables
+* Inserting data into a table
+* Using SELECT to see the contents of a table
 
 
-### installing
+### installing Postgres
 
 
 

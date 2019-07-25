@@ -4,10 +4,12 @@
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/snp6XDFcMXY" frameborder="0" allowfullscreen></iframe>
 
+
+
 In this video we are going to talk about first normal form or 1NF. There are two rules for 1NF. Here they are
 
 
-### Rules for First Normal Form
+### In This Video: Rules for First Normal Form
 
 1. Each row of data must contain atomic values
 2. Each row of data must have a unique identifier called the primary key
