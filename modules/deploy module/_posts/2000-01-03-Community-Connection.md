@@ -1,3 +1,0 @@
-## Community Connection
-
-TBD
