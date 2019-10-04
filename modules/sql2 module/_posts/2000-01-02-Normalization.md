@@ -299,3 +299,56 @@ We can represent this as follows:
 	JOIN musician  ON 
 	musician.musician_id = plays.member_id 
 	WHERE musician.stagename = 'Ben McKee';
+
+
+
+
+### Queries that require multiple copies of a table
+
+Suppose as part of the bands database we have a table specifying who is friends with whom. 
+
+    CREATE TABLE friends (
+    person INTEGER REFERENCES musician(musician_id),
+    friends_with INTEGER REFERENCES musician(musician_id));
+    
+     INSERT INTO friends (person, friends_with) VALUES
+      (7, 8),
+      (7, 9),
+      (9, 11);   
+
+For example, the first insert represents that Dan Reynolds is friends with Wing. Let's consider how we would write a query to find out who is Dan Reynolds friends with. At first we might think to write:
+
+    SELECT musician.stagename FROM musician 
+    JOIN friends ON musician.musician_id = friends.person 
+    WHERE musician.stagename = 'Dan Reynolds';
+
+You will see that this doesn't work as all it returns is `Dan Reynolds`
+
+For this query we actually need two copies of the musicians table-- one to find the musician_id of Dan Reynolds. Once we find out his id is 7, look at the friends table and discover he is friends with id 8, we need another table to lookup the stagename for id 8. We implement it as follows:
+
+    SELECT m1.stagename FROM musician as m1 
+    JOIN friends ON m1.musician_id = friends.friends_with 
+    JOIN musician as m2 ON friends.person = m2.musician_id 
+    WHERE m2.stagename = 'Dan Reynolds';
+
+           stagename       
+     ----------------------
+      Wing
+      Aja Volkman-Reynolds
+     (2 rows)
+
+
+Suppose we want to know who is in bands with Dan Reynolds. For that the query is
+
+
+    SELECT m1.stagename FROM musician as m1 
+      JOIN bandmember AS b1 ON m1.musician_id = b1.member_id 
+      JOIN bandmember as b2 ON b1.band_id = b2.band_id 
+      JOIN musician AS m2 ON m2.musician_id = b2.member_id 
+      WHERE m1.stagename <> 'Dan Reynolds' 
+      AND m2.stagename = 'Dan Reynolds';
+    
+
+
+> Question: why do we have `m1.stagename <> 'Dan Reynolds'` ?
+
