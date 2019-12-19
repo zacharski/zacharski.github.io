@@ -40,3 +40,17 @@ On the menu bar at the top of this page you will see that the course consists of
 * How to deploy to a server
 * How to set up a reverse proxy server
 
+### Conceptual Overview of the Architecture of a Web Application 
+This videos are a few years old but should give you a basic understanding of a few key concepts.
+
+#### Model View Controller
+
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/owxVShXDLWI" frameborder="0" allowfullscreen></iframe></center>
+
+#### REST Web Services
+
+
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oDEO9-OM4_c" frameborder="0" allowfullscreen></iframe></center>
