@@ -1,3 +1,11 @@
 title: Backend Developer Fundamentals
 description: Backend Developer Fundamentals
-modules: ['sql module', 'nodejs module', 'deploy module', 'sql2 module', 'nextjs module']
+modules:
+  [
+    "sql module",
+    "nodejs module",
+    "deploy module",
+    "sql2 module",
+    "nextjs module",
+    "elasticsearch",
+  ]
