@@ -22,7 +22,7 @@ band | members
  Coldplay | Chris Martin, Jonny Buckland, Guy Berryman
  Chainsmokers | Andrew Taggart, Alex Pall
  Fall Out Boy | Patrick Stump, Joe Trohman, Pete Wentz
- 
+
 does not contain atomic values because the members column has multiple values of the same type (Chris Martin and Jonny Buckland are the same type of thing and there are multiple of those in a cell )
 
 This next table is also not atomic because multiple columns represent the same sort of thing (member1, member2, member3).
@@ -74,7 +74,7 @@ Some non-key column is dependent is dependent on some but not all of the columns
 A non-key column is related to another non-key column
 
  So in the above table repeated here:
- 
+
 
  city (PK) | state (PK)| ST  | population
 :---: | :---:  | :---: | :---: 
@@ -117,12 +117,10 @@ crn (PK) | course | section  | days
 
 **COURSES**
 
-course (PK) | title | section | days 
-:---: | :---: | :---: | :---: 
-cpsc110 | Introduction to computer science | 4 | MWF
- cpsc110 | Introduction to computer science | 3 | TTh
- musp301 | Intermediate Piano | 1 |  TBD
- musp301 | Intermediate Piano | 2 |  TBD
+course (PK) | title | credits 
+:---: | :---: | :---: 
+cpsc110 | Introduction to computer science |    3    
+ musp301 | Intermediate Piano | 1 
 
 In the sections table, the course column is a foreign key.
 
@@ -137,13 +135,13 @@ In the sections table, the course column is a foreign key.
 		 course TEXT REFERENCES courses (course),
 		 section NUMERIC,
 		 days TEXT);
-		 
+
 Suppose we want to find the course (cpsc110) and title (Introduction to Computer Science) that meet on TTh:
 
 	SELECT courses.course, courses.title FROM courses 
 	JOIN sections ON courses.course = sections.course 
 	WHERE sections.days = 'TTh';
-	
+
 ### VIDEO 2
 
 This table is in 1NF but not 2NF.
@@ -205,7 +203,7 @@ We can represent this as follows:
 
     CREATE DATABASE bands;
     \c bands;
-
+    
     CREATE TABLE band
     (
       band_id integer PRIMARY KEY,
@@ -213,13 +211,13 @@ We can represent this as follows:
       genre text,
       formed integer
     );
-
+    
     INSERT INTO band (band_id, name, genre, formed) VALUES (1, 'Baby Metal', 'heavy metal', 2010), 
                                              (2, 'Imagine Dragons', 'alternative rock', 2008), 
                                              (3, 'Sakura Gakuin', 'J-pop', 2010), 
                                              (4, 'Egyptian', 'alternative rock', 2010),
                                              (5, 'Earth Wind & Fire', 'funk', 1969);
-
+    
     CREATE TABLE musician
     (
       musician_id integer PRIMARY KEY,
@@ -228,7 +226,7 @@ We can represent this as follows:
       origin text,
       birthdate DATE
     );
-
+    
     INSERT INTO musician (musician_id, stagename, realname, origin, birthdate) VALUES 
         (1, 'Su-Metal', 'Suzuka Nakamoto', 'Hiroshima Prefecture, Japan', '1997-12-20'), 
         (2, 'MoaMetal', 'Moa Kikuchi', '  Kanagawa Prefecture, Japan', '1999-7-4'),
@@ -241,7 +239,7 @@ We can represent this as follows:
         (9, 'Aja Volkman-Reynolds', 'Aja Volkman-Reynolds', 'Eugene, OR', '1987-01-01'),
         (10, 'Daniel Platzman', 'Daniel Platzman', '  Atlanta, Georgia, United States', '1986-09-28'),
         (11, 'Ben McKee', 'Benjamin Arthur McKee', 'Forestville, California, United States', '1985-04-07');
-
+    
     create table bandmember (
       band_id integer REFERENCES band(band_id),
       member_id integer REFERENCES musician(musician_id),
@@ -251,18 +249,18 @@ We can represent this as follows:
          (2, 7), (2, 8), (2, 10), (2, 11),
          (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6),
          (4, 7), (4, 9);
-
+    
     create table instrument (
       id integer PRIMARY KEY,
       name text,
       family text
       
       );
-
+    
     insert into instrument (id, name, family) VALUES (1, 'vocals', 'voice'), 
        (2, 'screams', 'voice'), (3, 'dance', 'dance'),
        (4, 'koto', 'string'), (5, 'electric guitar', 'string'), (6, 'drums', 'percussion'), (7, 'bass', 'string'), (8, 'keyboards', 'keyboards');
-
+    
     create table plays (
       member_id integer REFERENCES musician(musician_id),
       instrument_id integer REFERENCES instrument(id),
@@ -270,7 +268,7 @@ We can represent this as follows:
      
     insert into plays VALUES (1, 1), (1, 3), (2, 2), (2, 3), (3, 2), (3,3), 
        (7, 1), (7, 8), (8, 5), (9, 1), (9,8), (10, 6), (10,1), (11, 7); 
-       
+
 
 ##### Queries
 
@@ -282,8 +280,8 @@ We can represent this as follows:
 	JOIN band ON 
 	bandmember.band_id = band.band_id 
 	WHERE band.name = 'Imagine Dragons';
-    
-    stagename    
+	
+	stagename    
 	-----------------
  	Dan Reynolds
  	Wing
@@ -330,7 +328,7 @@ For this query we actually need two copies of the musicians table-- one to find 
     JOIN friends ON m1.musician_id = friends.friends_with 
     JOIN musician as m2 ON friends.person = m2.musician_id 
     WHERE m2.stagename = 'Dan Reynolds';
-
+    
            stagename       
      ----------------------
       Wing
@@ -347,7 +345,7 @@ Suppose we want to know who is in bands with Dan Reynolds. For that the query is
       JOIN musician AS m2 ON m2.musician_id = b2.member_id 
       WHERE m1.stagename <> 'Dan Reynolds' 
       AND m2.stagename = 'Dan Reynolds';
-    
+
 
 
 > Question: why do we have `m1.stagename <> 'Dan Reynolds'` ?
